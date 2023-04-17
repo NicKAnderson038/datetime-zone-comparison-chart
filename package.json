@@ -1,0 +1,22 @@
+{
+  "name": "datetime-zone-comparison-chart",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^2.0.3",
+    "svelte": "^3.55.1",
+    "vite": "^4.2.0"
+  },
+  "dependencies": {
+    "apexcharts": "^3.39.0",
+    "is-what": "^4.1.8",
+    "moment": "^2.29.4",
+    "svelte-apexcharts": "^1.0.2"
+  }
+}
