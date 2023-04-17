@@ -3,6 +3,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: '/datetime-zone-comparison-chart/',
   plugins: [svelte()],
 })
