@@ -3,6 +3,10 @@
 
 This template should help get you started developing with Svelte in Vite.
 
+## Deploying to Github Pages
+
+How to [deploy](https://medium.com/mkdir-awesome/two-easy-ways-to-publish-your-svelte-project-on-github-pages-c8eaca2b6225) instruction. Gh-page wont work for pnpm & vite. Also the first answer needs modifications. 
+
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
