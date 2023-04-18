@@ -4,6 +4,7 @@
     import { chart } from 'svelte-apexcharts'
     import { isNumber, isUndefined } from 'is-what'
     import moment from 'moment'
+    import MediaQuery from './MediaQuery.svelte'
 
     // export let timeZone = 'America/Chicago'
     export let start
@@ -29,6 +30,7 @@
 
     let START
     let END
+    let dataStore = []
     // const START = `${year}-${month}-${day}T${getTimezoneOffset(start)}:00:00.000Z`
     // const END = `${year}-${month}-${day}T${getTimezoneOffset(end)}:00:00.000Z`
     // const START_02 = '2023-04-18T16:00:00.000Z'
@@ -150,6 +152,21 @@
                 colors: ['#f3f4f5', '#fff'],
             },
         },
+        // responsive: [
+        //     {
+        //         breakpoint: 1000,
+        //         // options: {
+        //         //     plotOptions: {
+        //         //         bar: {
+        //         //             horizontal: false,
+        //         //         },
+        //         //     },
+        //         //     legend: {
+        //         //         position: 'bottom',
+        //         //     },
+        //         // },
+        //     },
+        // ],
         // fill: {
         //   type: 'gradient',
         //   gradient: {
@@ -159,20 +176,14 @@
         //     stops: [0, 100]
         //   }
         // },
-        xaxis: {
-            type: 'datetime',
-            labels: {
-                rotate: -45,
-                formatter: (value, timestamp) => {
-                    // return new Date(timestamp) // The formatter function overrides format property
-                    // const day = moment(value).format('dddd')
-                    // const hour = moment(value).format('hh A')
-                    // return `${day}
-                    // ${hour}`
-                    return moment(value).format('ddd hh A')
-                },
-            },
-        },
+        // xaxis: {
+        //     type: 'datetime',
+        //     labels: {
+        //         formatter: value => {
+        //             return moment(value).format('ddd hh A')
+        //         },
+        //     },
+        // },
         grid: {
             row: {
                 colors: ['#f3f4f5', '#fff'],
@@ -190,40 +201,8 @@
     beforeUpdate(() => {
         START = `${year}-${month}-${day}T${getTimezoneOffset(start)}:00:00.000Z`
         END = `${year}-${month}-${day}T${getTimezoneOffset(end)}:00:00.000Z`
-        // options.series[0].data = [
-        //     {
-        //         x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
-        //         y: [new Date(START).getTime(), new Date(END).getTime()],
-        //         fillColor: '#008FFB',
-        //     },
-        //     {
-        //         x: timeZone.replace(/.*\//, ''),
-        //         y: [timeZoneTool(START, timeZone), timeZoneTool(END, timeZone)],
-        //         fillColor: '#00E396',
-        //     },
-        // ]
 
-        options.series = [
-            // {
-            //     data: [
-            //         {
-            //             x: timeZone1?.replace(/.*\//, ''),
-            //             y: [
-            //                 timeZoneTool(getRanges(START, -2), timeZone1),
-            //                 timeZoneTool(getRanges(END, -2), timeZone1),
-            //             ],
-            //             fillColor: '#008FFB',
-            //         },
-            //         {
-            //             x: timeZone2.replace(/.*\//, ''),
-            //             y: [
-            //                 timeZoneTool(getRanges(START, -2), timeZone2),
-            //                 timeZoneTool(getRanges(END, -2), timeZone2),
-            //             ],
-            //             fillColor: '#00E396',
-            //         },
-            //     ],
-            // },
+        dataStore = [
             {
                 data: [
                     {
@@ -285,33 +264,49 @@
                     },
                 ],
             },
-            // {
-            //     data: [
-            //         {
-            //             x: timeZone1?.replace(/.*\//, ''),
-            //             // x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
-            //             y: [
-            //                 timeZoneTool(getRanges(START, 2), timeZone1),
-            //                 timeZoneTool(getRanges(END, 2), timeZone1),
-            //             ],
-            //             fillColor: '#008FFB',
-            //         },
-            //         {
-            //             x: timeZone2.replace(/.*\//, ''),
-            //             y: [
-            //                 timeZoneTool(getRanges(START, 2), timeZone2),
-            //                 timeZoneTool(getRanges(END, 2), timeZone2),
-            //             ],
-            //             fillColor: '#00E396',
-            //         },
-            //     ],
-            // },
         ]
+
+        options.series = dataStore
     })
+
+    function multSeries(options) {
+        options.series = dataStore
+        options.xaxis = {
+            type: 'datetime',
+            labels: {
+                formatter: value => {
+                    return moment(value).format('ddd hh A')
+                },
+            },
+        }
+        return options
+    }
+
+    function singleSeries(options) {
+        options.series = [dataStore[1]]
+        options.xaxis = {
+            type: 'datetime',
+            labels: {
+                formatter: value => {
+                    return moment(value).format('hh A')
+                },
+            },
+        }
+        return options
+    }
 </script>
 
 <div class="chart">
-    <div use:chart={options} />
+    <MediaQuery query="(min-width: 481px)" let:matches>
+        {#if matches}
+            <div use:chart={multSeries(options)} />
+        {/if}
+    </MediaQuery>
+    <MediaQuery query="(max-width: 480px)" let:matches>
+        {#if matches}
+            <div use:chart={singleSeries(options)} />
+        {/if}
+    </MediaQuery>
 </div>
 
 <style>
