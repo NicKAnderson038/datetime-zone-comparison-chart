@@ -58,7 +58,6 @@
             },
             style: {
                 fontSize: '12px',
-                color: '#000000',
             },
         },
         series: [
