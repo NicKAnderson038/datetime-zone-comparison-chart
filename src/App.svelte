@@ -3,6 +3,7 @@
 
     // import svelteLogo from './assets/svelte.svg'
     // import viteLogo from '/vite.svg'
+    import TimeSelector from './lib/TimeSelector.svelte'
     import Select from './lib/Select.svelte'
     import DatetimeChart from './lib/DatetimeChart.svelte'
 
@@ -13,8 +14,18 @@
 
     const myTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
+    let start = '09:00'
+    let end = '17:00'
     export let timeZoneSelection1 = myTimezone
     export let timeZoneSelection2 = 'America/Chicago'
+
+    function startSelect(e) {
+        start = e.detail
+    }
+
+    function endSelect(e) {
+        end = e.detail
+    }
 
     function myTimeZone(e) {
         timeZoneSelection1 = e.detail
@@ -36,6 +47,7 @@
   </div> -->
     <h1>Time Zone Comparison</h1>
     <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
+    <TimeSelector {start} {end} on:start={startSelect} on:end={endSelect}/>
     <!-- <div class="card">
         <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
     </div> -->
@@ -46,6 +58,8 @@
     <DatetimeChart
         timeZone1={timeZoneSelection1}
         timeZone2={timeZoneSelection2}
+        {start}
+        {end}
     />
 </main>
 
@@ -63,7 +77,7 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #008FFB;
+        background-color: #008ffb;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;

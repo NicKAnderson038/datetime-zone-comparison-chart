@@ -1,23 +1,27 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
-    import { createEventDispatcher } from "svelte"
+    import { createEventDispatcher } from 'svelte'
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher()
     // @ts-ignore
-    const timeZoneList = Intl.supportedValuesOf('timeZone');
+    const timeZoneList = Intl.supportedValuesOf('timeZone')
 
     export let selected
     export let myLocation
-
 </script>
 
 {#if myLocation}
-<label><span class="dot dot-blue" />Company Location</label>
+    <label for="timezone"><span class="dot dot-blue" />Company Location</label>
 {:else}
-<label><span class="dot dot-green" />Future Location</label>
+    <label for="timezone"><span class="dot dot-green" />Future Location</label>
 {/if}
-<select value={selected} on:change={(e) => dispatch('timezone', e.target?.value)}>
+<select
+    id="timezone"
+    name="timezone"
+    value={selected}
+    on:change={e => dispatch('timezone', e.target?.value)}
+>
     {#each timeZoneList as question}
         <option value={question}>
             {question}
@@ -45,6 +49,6 @@
     }
 
     .dot-green {
-        background-color: #00E396;
+        background-color: #00e396;
     }
 </style>
