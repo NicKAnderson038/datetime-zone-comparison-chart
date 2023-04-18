@@ -15,11 +15,12 @@
 
     const START = `${year}-${month}-${day}T16:00:00.000Z`
     const END = `${year}-${month}-${day}T24:00:00.000Z`
-    const START_02 = '2023-04-18T16:00:00.000Z'
-    const END_02 = '2023-04-18T24:00:00.000Z'
+    // const START_02 = '2023-04-18T16:00:00.000Z'
+    // const END_02 = '2023-04-18T24:00:00.000Z'
 
-    export let timeZone = 'America/Chicago'
-    const myTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    // export let timeZone = 'America/Chicago'
+    export let timeZone1
+    export let timeZone2
 
     function timeZoneTool(d, timeZone) {
         const date = new Date(d).toLocaleString('en-US', {
@@ -37,23 +38,10 @@
             x: {
                 show: true,
                 formatter: val => {
-                    const numberDate = val =>  moment(val).format('dddd hh A')
-                    return isNumber(val) ? numberDate(val) : val 
+                    const numberDate = val => moment(val).format('dddd hh A')
+                    return isNumber(val) ? numberDate(val) : val
                 },
             },
-            // y: {
-            //     formatter: undefined,
-            //     title: {
-            //         formatter: seriesName => {
-            //             console.log(seriesName)
-            //             return seriesName
-            //         },
-            //     },
-            // },
-            // z: {
-            //     formatter: undefined,
-            //     title: 'Size: ',
-            // },
         },
         series: [
             {
@@ -168,15 +156,18 @@
             {
                 data: [
                     {
-                        x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
-                        y: [new Date(START).getTime(), new Date(END).getTime()],
+                        x: timeZone1?.replace(/.*\//, ''),
+                        y: [
+                            timeZoneTool(START, timeZone1),
+                            timeZoneTool(END, timeZone1),
+                        ],
                         fillColor: '#008FFB',
                     },
                     {
-                        x: timeZone.replace(/.*\//, ''),
+                        x: timeZone2?.replace(/.*\//, ''),
                         y: [
-                            timeZoneTool(START, timeZone),
-                            timeZoneTool(END, timeZone),
+                            timeZoneTool(START, timeZone2),
+                            timeZoneTool(END, timeZone2),
                         ],
                         fillColor: '#00E396',
                     },

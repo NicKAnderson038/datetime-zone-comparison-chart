@@ -6,14 +6,22 @@
     import Select from './lib/Select.svelte'
     import DatetimeChart from './lib/DatetimeChart.svelte'
 
-    const myTimezone = Intl.DateTimeFormat()
+    const currentTimezone = Intl.DateTimeFormat()
         .resolvedOptions()
         .timeZone.replace(/.*\//, '')
         .replaceAll('_', ' ')
 
-    export let timeZoneSelection
-    function timeZone(e) {
-        timeZoneSelection = e.detail
+    const myTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+    export let timeZoneSelection1 = myTimezone
+    export let timeZoneSelection2 = 'America/Chicago'
+
+    function myTimeZone(e) {
+        timeZoneSelection1 = e.detail
+    }
+
+    function companyTimeZone(e) {
+        timeZoneSelection2 = e.detail
     }
 </script>
 
@@ -27,12 +35,18 @@
     </a>
   </div> -->
     <h1>Time Zone Comparison</h1>
-    <h3><span class="dot" />My Location: {myTimezone}</h3>
+    <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
     <div class="card">
-        <Select on:timezone={timeZone} />
+        <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
+    </div>
+    <div class="card">
+        <Select on:timezone={companyTimeZone} selected="America/Chicago" />
     </div>
 
-    <DatetimeChart timeZone={timeZoneSelection} />
+    <DatetimeChart
+        timeZone1={timeZoneSelection1}
+        timeZone2={timeZoneSelection2}
+    />
 </main>
 
 <style>
@@ -49,7 +63,7 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #008ffb;
+        background-color: #775DD0;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;

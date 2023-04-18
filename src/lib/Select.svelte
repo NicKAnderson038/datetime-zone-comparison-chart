@@ -7,11 +7,16 @@
     // @ts-ignore
     const timeZoneList = Intl.supportedValuesOf('timeZone');
 
-    let selected = 'America/Chicago'
+    export let selected
+    export let myLocation
 
 </script>
 
-<label><span class="dot" />Compare Location</label>
+{#if myLocation}
+<label><span class="dot dot-blue" />Company Location</label>
+{:else}
+<label><span class="dot dot-green" />Future Location</label>
+{/if}
 <select value={selected} on:change={(e) => dispatch('timezone', e.target?.value)}>
     {#each timeZoneList as question}
         <option value={question}>
@@ -28,11 +33,18 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #00E396;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;
         top: 6px;
         position: relative;
+    }
+
+    .dot-blue {
+        background-color: #008ffb;
+    }
+
+    .dot-green {
+        background-color: #00E396;
     }
 </style>
