@@ -46,8 +46,8 @@
     </a>
   </div> -->
     <h1>Time Zone Comparison</h1>
-    <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
     <TimeSelector {start} {end} on:start={startSelect} on:end={endSelect}/>
+    <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
     <!-- <div class="card">
         <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
     </div> -->
