@@ -2,7 +2,7 @@
     import { beforeUpdate } from 'svelte'
     // @ts-ignore
     import { chart } from 'svelte-apexcharts'
-    import { isNumber } from 'is-what'
+    import { isNumber, isUndefined } from 'is-what'
     import moment from 'moment'
 
     // export let timeZone = 'America/Chicago'
@@ -51,10 +51,14 @@
         tooltip: {
             x: {
                 show: true,
-                formatter: val => {
-                    const numberDate = val => moment(val).format('dddd hh A')
-                    return isNumber(val) ? numberDate(val) : val
+                formatter: (val, obj) => {
+                    const numberDate = (val, format) => moment(val).format(format)
+                    return isNumber(val) ? numberDate(val, 'dddd hh A') : val
                 },
+            },
+            style: {
+                fontSize: '12px',
+                color: 'black',
             },
         },
         series: [
@@ -169,9 +173,9 @@
     }
 
     function getRanges(date, calc) {
-        const d = new Date(date);
-        const res = d.setDate(d.getDate() + calc);
-        return new Date(res).toISOString();
+        const d = new Date(date)
+        const res = d.setDate(d.getDate() + calc)
+        return new Date(res).toISOString()
     }
 
     beforeUpdate(() => {
@@ -189,7 +193,7 @@
         //         fillColor: '#00E396',
         //     },
         // ]
-        console.log(START, END)
+
         options.series = [
             // {
             //     data: [
