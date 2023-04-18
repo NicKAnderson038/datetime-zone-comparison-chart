@@ -83,6 +83,10 @@ button:focus-visible {
   .apexcharts-legend-text {
     color: black !important;
   }
+
+  .apexcharts-text {
+    fill: black;
+  }
 }
 
 .apexcharts-tooltip {
@@ -92,5 +96,8 @@ button:focus-visible {
 @media (prefers-color-scheme: dark) {
   .apexcharts-legend-text {
     color: white !important;
+  }
+  .apexcharts-text {
+    fill: white;
   }
 }
