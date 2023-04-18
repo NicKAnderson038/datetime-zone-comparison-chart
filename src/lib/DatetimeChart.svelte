@@ -49,10 +49,20 @@
             type: 'rangeBar',
         },
         tooltip: {
+            // fixed: {
+            //       enabled: true,
+            //       position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+            //       offsetY: 30,
+            //       offsetX: 60
+            //     },
+            // items: {
+            //     display: 'flex',
+            // },
             x: {
                 show: true,
                 formatter: (val, obj) => {
-                    const numberDate = (val, format) => moment(val).format(format)
+                    const numberDate = (val, format) =>
+                        moment(val).format(format)
                     return isNumber(val) ? numberDate(val, 'dddd hh A') : val
                 },
             },

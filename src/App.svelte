@@ -48,11 +48,12 @@
   </div> -->
     <h1>Time Zone Comparison</h1>
     <TimeSelector {start} {end} on:start={startSelect} on:end={endSelect} />
-    <h3>
-        <span class="dot" />My Current Location & Day: {currentTimezone} - {moment().format(
-            'dddd'
-        )}
-    </h3>
+    <div class="header">
+        <h3>
+            <div><span class="dot" />My Current Location & Day</div>
+        </h3>
+        <div>{currentTimezone} - {moment().format('dddd')}</div>
+    </div>
     <!-- <div class="card">
         <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
     </div> -->
@@ -73,10 +74,14 @@
         border-bottom: 2px solid;
     }
 
-    h3 {
+    .header {
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
+    }
+    h3 {
+        margin-bottom: 2px;
     }
 
     .dot {
@@ -86,5 +91,7 @@
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;
+        top: 6px;
+        position: relative;
     }
 </style>
