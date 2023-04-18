@@ -58,7 +58,7 @@
             },
             style: {
                 fontSize: '12px',
-                color: 'black',
+                color: '#000000',
             },
         },
         series: [
