@@ -79,8 +79,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+
+  .apexcharts-legend-text {
+    color: black !important;
+  }
 }
 
 .apexcharts-tooltip {
   color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  .apexcharts-legend-text {
+    color: white !important;
+  }
 }
