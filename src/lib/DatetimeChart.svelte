@@ -63,7 +63,7 @@
                 formatter: (val, obj) => {
                     const numberDate = (val, format) =>
                         moment(val).format(format)
-                    return isNumber(val) ? numberDate(val, 'dddd hh A') : val
+                    return isNumber(val) ? numberDate(val, 'ddd hh A') : val
                 },
             },
             style: {
