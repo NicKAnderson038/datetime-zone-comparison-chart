@@ -36,9 +36,9 @@
   </div> -->
     <h1>Time Zone Comparison</h1>
     <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
-    <div class="card">
+    <!-- <div class="card">
         <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
-    </div>
+    </div> -->
     <div class="card">
         <Select on:timezone={companyTimeZone} selected="America/Chicago" />
     </div>
@@ -63,7 +63,7 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #775DD0;
+        background-color: #008FFB;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;

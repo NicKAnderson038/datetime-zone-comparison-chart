@@ -5,6 +5,13 @@
     import { isNumber } from 'is-what'
     import moment from 'moment'
 
+    function getTimezoneOffset(num) {
+        const offset = new Date().getTimezoneOffset()
+        const sign = offset > 0 ? '+' : '-'
+        const value = Math.abs(num + Number(`${sign}${Math.abs(offset) / 60}`))
+        return value.toString().length == 1 ? `0${value}` : `${value}`
+    }
+
     const date = new Date()
     const year = date.getFullYear()
     // console.log(year) // 👉️ 2025
@@ -13,19 +20,27 @@
     const day = String(date.getDate()).padStart(2, '0')
     // console.log(day) // 👉️ 05
 
-    const START = `${year}-${month}-${day}T16:00:00.000Z`
-    const END = `${year}-${month}-${day}T24:00:00.000Z`
+    const START = `${year}-${month}-${day}T${getTimezoneOffset(9)}:00:00.000Z`
+    const END = `${year}-${month}-${day}T${getTimezoneOffset(17)}:00:00.000Z`
     // const START_02 = '2023-04-18T16:00:00.000Z'
     // const END_02 = '2023-04-18T24:00:00.000Z'
 
     // export let timeZone = 'America/Chicago'
     export let timeZone1
     export let timeZone2
+    const myTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     function timeZoneTool(d, timeZone) {
+        // console.log(d, timeZone)
+
         const date = new Date(d).toLocaleString('en-US', {
             timeZone,
         })
+        console.log(timeZone, d, date)
+        // const x = new Date(date).getTime()
+        // console.log(x)
+        // const y = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long', timeZone }).format(x)
+        // console.log(timeZone, y, new Date(y).getTime());
         return new Date(date).getTime()
     }
 
@@ -155,6 +170,14 @@
         options.series = [
             {
                 data: [
+                    // {
+                    //     x: timeZone1?.replace(/.*\//, ''),
+                    //     y: [
+                    //         new Date(START).getTime(),
+                    //         new Date(END).getTime(),
+                    //     ],
+                    //     fillColor: '#008FFB',
+                    // },
                     {
                         x: timeZone1?.replace(/.*\//, ''),
                         y: [
