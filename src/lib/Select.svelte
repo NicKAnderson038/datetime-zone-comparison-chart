@@ -49,6 +49,6 @@
     }
 
     .dot-green {
-        background-color: #00e396;
+        background-color: #00e496;
     }
 </style>

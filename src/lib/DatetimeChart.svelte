@@ -117,15 +117,18 @@
             enabled: true,
             formatter: function (val, opts) {
                 // @ts-ignore
-                const label = opts.w.globals.labels[opts.dataPointIndex]
-                const a = moment(val[0]).format('ddd hh A')
-                let b = moment(val[1]).format('ddd hh A')
-                if (
-                    moment(val[0]).format('ddd') ===
-                    moment(val[1]).format('ddd')
-                ) {
-                    b = moment(val[1]).format('hh A')
-                }
+                // const label = opts.w.globals.labels[opts.dataPointIndex]
+                // const a = moment(val[0]).format('ddd hh A')
+                // let b = moment(val[1]).format('ddd hh A')
+                // if (
+                //     moment(val[0]).format('ddd') ===
+                //     moment(val[1]).format('ddd')
+                // ) {
+                //     b = moment(val[1]).format('hh A')
+                // }
+
+                const a = moment(val[0]).format('hh A')
+                const b = moment(val[1]).format('hh A')
                 // const diff = b.diff(a, 'hours')
                 // return label + ': ' + diff + (diff > 1 ? ' hours' : ' hour')
                 return `  ${a} - ${b}  `
@@ -134,23 +137,41 @@
                 colors: ['#f3f4f5', '#fff'],
             },
         },
+        // fill: {
+        //   type: 'gradient',
+        //   gradient: {
+        //     shadeIntensity: 1,
+        //     opacityFrom: 0.7,
+        //     opacityTo: 0.9,
+        //     stops: [0, 100]
+        //   }
+        // },
         xaxis: {
+            type: 'datetime',
             labels: {
+                rotate: -45,
                 formatter: (value, timestamp) => {
                     // return new Date(timestamp) // The formatter function overrides format property
-                    return moment(value).format('ddd')
+                    // const day = moment(value).format('dddd')
+                    // const hour = moment(value).format('hh A')
+                    // return `${day}
+                    // ${hour}`
+                    return moment(value).format('ddd hh A')
                 },
             },
         },
-        // yaxis: {
-        //     show: false,
-        // },
         grid: {
             row: {
                 colors: ['#f3f4f5', '#fff'],
                 opacity: 1,
             },
         },
+    }
+
+    function getRanges(date, calc) {
+        const d = new Date(date);
+        const res = d.setDate(d.getDate() + calc);
+        return new Date(res).toISOString();
     }
 
     beforeUpdate(() => {
@@ -168,24 +189,57 @@
         //         fillColor: '#00E396',
         //     },
         // ]
+        console.log(START, END)
         options.series = [
+            // {
+            //     data: [
+            //         {
+            //             x: timeZone1?.replace(/.*\//, ''),
+            //             y: [
+            //                 timeZoneTool(getRanges(START, -2), timeZone1),
+            //                 timeZoneTool(getRanges(END, -2), timeZone1),
+            //             ],
+            //             fillColor: '#008FFB',
+            //         },
+            //         {
+            //             x: timeZone2.replace(/.*\//, ''),
+            //             y: [
+            //                 timeZoneTool(getRanges(START, -2), timeZone2),
+            //                 timeZoneTool(getRanges(END, -2), timeZone2),
+            //             ],
+            //             fillColor: '#00E396',
+            //         },
+            //     ],
+            // },
             {
                 data: [
-                    // {
-                    //     x: timeZone1?.replace(/.*\//, ''),
-                    //     y: [
-                    //         new Date(START).getTime(),
-                    //         new Date(END).getTime(),
-                    //     ],
-                    //     fillColor: '#008FFB',
-                    // },
+                    {
+                        x: timeZone1?.replace(/.*\//, ''),
+                        y: [
+                            timeZoneTool(getRanges(START, -1), timeZone1),
+                            timeZoneTool(getRanges(END, -1), timeZone1),
+                        ],
+                        fillColor: '#169bff',
+                    },
+                    {
+                        x: timeZone2.replace(/.*\//, ''),
+                        y: [
+                            timeZoneTool(getRanges(START, -1), timeZone2),
+                            timeZoneTool(getRanges(END, -1), timeZone2),
+                        ],
+                        fillColor: '#00e496',
+                    },
+                ],
+            },
+            {
+                data: [
                     {
                         x: timeZone1?.replace(/.*\//, ''),
                         y: [
                             timeZoneTool(START, timeZone1),
                             timeZoneTool(END, timeZone1),
                         ],
-                        fillColor: '#008FFB',
+                        fillColor: '#0080e2',
                     },
                     {
                         x: timeZone2?.replace(/.*\//, ''),
@@ -193,25 +247,47 @@
                             timeZoneTool(START, timeZone2),
                             timeZoneTool(END, timeZone2),
                         ],
-                        fillColor: '#00E396',
+                        fillColor: '#00ca85',
+                    },
+                ],
+            },
+            {
+                data: [
+                    {
+                        x: timeZone1?.replace(/.*\//, ''),
+                        // x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
+                        y: [
+                            timeZoneTool(getRanges(START, 1), timeZone1),
+                            timeZoneTool(getRanges(END, 1), timeZone1),
+                        ],
+                        fillColor: '#169bff',
+                    },
+                    {
+                        x: timeZone2.replace(/.*\//, ''),
+                        y: [
+                            timeZoneTool(getRanges(START, 1), timeZone2),
+                            timeZoneTool(getRanges(END, 1), timeZone2),
+                        ],
+                        fillColor: '#00e496',
                     },
                 ],
             },
             // {
             //     data: [
             //         {
-            //             x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
+            //             x: timeZone1?.replace(/.*\//, ''),
+            //             // x: myTimezone.replace(/.*\//, '').replaceAll('_', ' '),
             //             y: [
-            //                 new Date(START_02).getTime(),
-            //                 new Date(END_02).getTime(),
+            //                 timeZoneTool(getRanges(START, 2), timeZone1),
+            //                 timeZoneTool(getRanges(END, 2), timeZone1),
             //             ],
             //             fillColor: '#008FFB',
             //         },
             //         {
-            //             x: timeZone.replace(/.*\//, ''),
+            //             x: timeZone2.replace(/.*\//, ''),
             //             y: [
-            //                 timeZoneTool(START_02, timeZone),
-            //                 timeZoneTool(END_02, timeZone),
+            //                 timeZoneTool(getRanges(START, 2), timeZone2),
+            //                 timeZoneTool(getRanges(END, 2), timeZone2),
             //             ],
             //             fillColor: '#00E396',
             //         },

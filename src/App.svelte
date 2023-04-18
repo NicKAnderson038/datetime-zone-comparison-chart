@@ -3,6 +3,7 @@
 
     // import svelteLogo from './assets/svelte.svg'
     // import viteLogo from '/vite.svg'
+    import moment from 'moment'
     import TimeSelector from './lib/TimeSelector.svelte'
     import Select from './lib/Select.svelte'
     import DatetimeChart from './lib/DatetimeChart.svelte'
@@ -46,8 +47,12 @@
     </a>
   </div> -->
     <h1>Time Zone Comparison</h1>
-    <TimeSelector {start} {end} on:start={startSelect} on:end={endSelect}/>
-    <h3><span class="dot" />My Current Location: {currentTimezone}</h3>
+    <TimeSelector {start} {end} on:start={startSelect} on:end={endSelect} />
+    <h3>
+        <span class="dot" />My Current Location & Day: {currentTimezone} - {moment().format(
+            'dddd'
+        )}
+    </h3>
     <!-- <div class="card">
         <Select on:timezone={myTimeZone} selected={myTimezone} myLocation />
     </div> -->
@@ -77,7 +82,7 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #008ffb;
+        background-color: #0080e2;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;
